@@ -6,16 +6,17 @@ print("bubblesort starting")
 #Name of script without path
 scriptName = os.path.basename(sys.argv[0]);
 
-Usage = """Usage : ,scriptName, Order tabToSort
-Usage : with Order egal asc OR desc
-Usage : with tabToSort like : 1,8,74,23"""
+usage = "Usage : " + scriptName + "Order tabToSort \n" \
+    "Usage : with Order egal asc OR desc \n" \
+    "Usage : with tabToSort like : 1,8,74,23"
+
 
 #Parse values to sort
 tab2=list(map(int, sys.argv[2].split(",")))
 
 #Check number of parameters
 if(len(sys.argv) < 3):
-	print(Usage)
+	print(usage)
 	#sys.exit()
 	quit()
 
@@ -62,7 +63,7 @@ elif (sys.argv[1]=="desc"):
 	sortDescValues()
 else:
 	print ("No function found")
-	print(Usage)
+	print(usage)
 	quit()
-	
+
 print ("finish")
