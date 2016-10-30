@@ -106,6 +106,7 @@ elif (sys.argv[1]==ORDER_DESC):
 elif (sys.argv[1]==Test and sys.argv[2]=="all"):
 	allSortTest()
 else:
+
 	print("No function found")
 	print(usage)
 	sys.exit()
