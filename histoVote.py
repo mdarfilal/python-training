@@ -36,7 +36,8 @@ def vote_of_citizens():
 		elif(CANDIDATES[0] == NAME_SECOND_CANDIDATE and vote == 2):
 			vote_second_candidate+=1
 
-def calcul_white_vote():
+def calculate_white_vote():
+	""" Calculate number of white votes. """
 	global white_vote
 	white_vote = NUMBER_OF_CITIZENS - vote_first_candidate - vote_second_candidate
 	
@@ -72,6 +73,6 @@ def show_result_on_circular_digram():
 
 print("Who will be the next president")
 vote_of_citizens()
-calcul_white_vote()
+calculate_white_vote()
 #show_result_on_stick_graph()
 show_result_on_circular_digram()
