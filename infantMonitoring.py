@@ -18,9 +18,9 @@ def exit_program():
 	""" Exit program. """
 	sys.exit()
 
-def check_values(datas):
+def check_values(str_datas):
 	""" Verify number of parameters and coherence. """
-	datas = list(map(str, datas.split(" ")))
+	datas = list(map(str, str_datas.split(" ")))
 
 	if(len(datas) == 1 and datas[0] == EXIT):
 		exit_program()
