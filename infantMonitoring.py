@@ -3,8 +3,8 @@ import os
 from datetime import datetime
 
 DATE_FORMAT = "date format : DD/MM/YYYY"
-SIZE_FORMAT = "size format in cm: 50,00"
-WEIGHT_FORMAT = "weight format in Kg: 3,000"
+SIZE_FORMAT = "size format in cm: 50.00"
+WEIGHT_FORMAT = "weight format in Kg: 3.000"
 EXIT_USAGE = "Exit usage : only write exit"
 USAGE = "Usage : date size weight \n" +DATE_FORMAT+"\n"+SIZE_FORMAT+"\n"+WEIGHT_FORMAT+"\n"+EXIT_USAGE
 
@@ -36,19 +36,34 @@ def parse_values(datas):
 	global size
 	global weight
 	
-	date = datas[0]
-	size = datas[1]
-	weight = datas[2]
+	try:
+		date = datetime.strptime(datas[0], '%d/%m/%Y')
+	except ValueError:
+		print("Can't parse date : ", datas[0])
+		print(DATE_FORMAT)
+		return False
 	
 	try:
-		datetime.strptime(date, '%d/%m/%Y')
+		size = float(datas[1])
 	except ValueError:
-		print("Can't parse date : ", date)
-		print(DATE_FORMAT)
+		print("Can't convert : ", datas[1])
+		print(SIZE_FORMAT)
+		return False
+	
+	try:
+		weight = float(datas[2])
+	except ValueError:
+		print("Can't convert : ", datas[2])
+		print(WEIGHT_FORMAT)
+		return False
+	
+	return True
 	
 while(True):
 	str_datas = input('Input date size weight (or "exit" to quit): ')
 	datas = check_values(str_datas)
 	if(datas is not None):
-		parse_values(datas)
-		print("Vous avez saisi : ",datas)
+		parsed = parse_values(datas)
+		if (parsed is True):
+			print("Vous avez saisi : ",datas)
+			print("Values " ,date," ",size," ",weight)
