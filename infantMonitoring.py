@@ -18,11 +18,11 @@ weight = None
 file_name = "infant_monotoring.csv"
 
 def exit_program():
-	""" Exit program. """
+	""" Exit program."""
 	sys.exit()
 
 def check_values(str_datas):
-	""" Verify number of parameters and coherence. """
+	""" Verify number of parameters and coherence."""
 	datas = list(map(str, str_datas.split(" ")))
 
 	if(len(datas) == 1 and datas[0] == EXIT):
@@ -34,36 +34,36 @@ def check_values(str_datas):
 		return datas
 
 def parse_values(datas):
-	""" Convert all values in good format, date in date, size in float, weight in float. """
+	""" Convert all values in good format, date in date, size in float, weight in float."""
 	global date
 	global size
 	global weight
-	
+
 	try:
 		date = datetime.strptime(datas[0], '%d/%m/%Y')
 	except ValueError:
 		print("Can't parse date : ", datas[0])
 		print(DATE_FORMAT)
 		return False
-	
+
 	try:
 		size = float(datas[1])
 	except ValueError:
 		print("Can't convert : ", datas[1])
 		print(SIZE_FORMAT)
 		return False
-	
+
 	try:
 		weight = float(datas[2])
 	except ValueError:
 		print("Can't convert : ", datas[2])
 		print(WEIGHT_FORMAT)
 		return False
-	
+
 	return True
 
 def create_file():
-	"""Create csv file if not exist"""
+	"""Create csv file if not exist."""
 	print("Create file")
 	#open file
 	file = open(file_name, "w", newline ='')
@@ -83,9 +83,9 @@ def write_file():
 	"""Write values entered with keyboard into csv file"""
 	print("Write into file")
 	
-	#open file and write a new line whitout white line 
+	#open file and write a new line whitout white line
 	file = open(file_name, "a", newline ='')
-	
+
 	try:
 		#create writer
 		writer = csv.writer(file, delimiter=';')
@@ -94,7 +94,7 @@ def write_file():
 	finally:
 		#close file
 		file.close()
-		
+
 while(True):
 	str_datas = input('Input date size weight (or "exit" to quit): ')
 	datas = check_values(str_datas)
