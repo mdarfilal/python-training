@@ -1,6 +1,7 @@
 import sys
 import os
 from datetime import datetime
+import csv
 
 DATE_FORMAT = "date format : DD/MM/YYYY"
 SIZE_FORMAT = "size format in cm: 50.00"
@@ -13,6 +14,8 @@ EXIT = "exit"
 date = None
 size = None
 weight = None
+
+file_name = "infant_monotoring.csv"
 
 def exit_program():
 	""" Exit program. """
@@ -58,12 +61,46 @@ def parse_values(datas):
 		return False
 	
 	return True
+
+def create_file():
+	"""Create csv file if not exist"""
+	print("Create file")
+	#open file
+	file = open(file_name, "w", newline ='')
+
+	try:
+		#create writer
+		writer = csv.writer(file, delimiter=';')
+
+		#write
+		writer.writerow(("Date", "Size", "Weight"))
+
+	finally:
+		#close file
+		file.close()
+
+def write_file():
+	"""Write values entered with keyboard into csv file"""
+	print("Write into file")
 	
+	#open file and write a new line whitout white line 
+	file = open(file_name, "a", newline ='')
+	
+	try:
+		#create writer
+		writer = csv.writer(file, delimiter=';')
+		
+		writer.writerow((date, size, weight))
+	finally:
+		#close file
+		file.close()
+		
 while(True):
 	str_datas = input('Input date size weight (or "exit" to quit): ')
 	datas = check_values(str_datas)
 	if(datas is not None):
 		parsed = parse_values(datas)
-		if (parsed is True):
-			print("Vous avez saisi : ",datas)
-			print("Values " ,date," ",size," ",weight)
+		if(parsed is True):
+			if not(os.path.isfile(file_name)):
+				create_file()
+			write_file()
