@@ -40,7 +40,8 @@ def parse_values(datas):
 	global weight
 
 	try:
-		date = datetime.strptime(datas[0], '%d/%m/%Y')
+		datetime.strptime(datas[0], '%d/%m/%Y')
+		date = datas[0]
 	except ValueError:
 		print("Can't parse date : ", datas[0])
 		print(DATE_FORMAT)
