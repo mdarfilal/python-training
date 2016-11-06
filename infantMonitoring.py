@@ -13,22 +13,20 @@ USAGE = "Usage : date size weight \n" +DATE_FORMAT+"\n"+SIZE_FORMAT+"\n"+WEIGHT_
 DATE_FORMATTER = '%d/%m/%Y'
 EXIT = "exit"
 
+file_name = "infant_monotoring.csv"
+
 date = None
 size = None
 weight = None
 
-date_list = []
-size_list = []
-weight_list = []
-	
-file_name = "infant_monotoring.csv"
+data_list = []
 
 def exit_program():
-	""" Exit program."""
+	"""Exit program."""
 	sys.exit()
 
 def check_values(str_datas):
-	""" Verify number of parameters and coherence."""
+	"""Verify number of parameters and coherence."""
 	datas = list(map(str, str_datas.split(" ")))
 
 	if(len(datas) == 1 and datas[0] == EXIT):
@@ -40,7 +38,7 @@ def check_values(str_datas):
 		return datas
 
 def parse_values(datas):
-	""" Convert all values in good format, date in date, size in float, weight in float."""
+	"""Convert all values in good format, date in date, size in float, weight in float."""
 	global date
 	global size
 	global weight
@@ -116,20 +114,29 @@ def read_file():
 		next(reader, None)
 		for row in reader:
 			print(row)
-			date_list.append(datetime.strptime(row[0], DATE_FORMATTER))
-			size_list.append(float(row[1]))
-			weight_list.append(float(row[2]))
+			data_list.append(row)
 
 def create_graph():
 	"""Create graph thanks to csv values."""
-	plt.title('Infant Monitoring Graph')
+	print("Create graph")
+	
+	#Title of figure
+	fig = plt.figure()
+	fig.suptitle('Infant Monitoring Graph', fontsize=14, fontweight='bold')
+	
+	#First figure x = date , y = weight
 	plt.subplot(211)
-	plt.plot(date_list,weight_list,'g')
+	x = [datetime.strptime(date, DATE_FORMATTER) for (date, size, weight) in data_list]
+	y = [weight for (date, size, weight) in data_list]
+	plt.plot(x,y,'g')
 	plt.xlabel('date')
 	plt.ylabel('weight (Kg)')
 	
+	#Second figure x = date,  y = size
 	plt.subplot(212)
-	plt.plot(date_list,size_list,'r')	
+	x = [datetime.strptime(date, DATE_FORMATTER) for (date, size, weight) in data_list]
+	y = [size for (date, size, weight) in data_list]
+	plt.plot(x,y,'r')	
 	plt.xlabel('date')
 	plt.ylabel('size (cm)')
 	
