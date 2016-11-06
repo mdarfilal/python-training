@@ -2,7 +2,7 @@ import sys
 import os
 from datetime import datetime
 import csv
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 
 DATE_FORMAT = "date format : DD/MM/YYYY"
 SIZE_FORMAT = "size format in cm: 50.00"
