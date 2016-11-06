@@ -1,8 +1,11 @@
 import sys
 import os
-from datetime import datetime
 import csv
+from datetime import datetime
 import matplotlib.pyplot as plt
+
+#Name of script without path
+script_name = os.path.basename(sys.argv[0])
 
 DATE_FORMAT = "date format : DD/MM/YYYY"
 SIZE_FORMAT = "size format in cm: 50.00"
@@ -10,8 +13,13 @@ WEIGHT_FORMAT = "weight format in Kg: 3.000"
 EXIT_USAGE = "Exit usage : only write exit"
 USAGE = "Usage : date size weight \n" +DATE_FORMAT+"\n"+SIZE_FORMAT+"\n"+WEIGHT_FORMAT+"\n"+EXIT_USAGE
 
+SIMPLE_USAGE = "Simple usage : "+script_name
+GRAPH_USAGE = "Graph usage : "+script_name+" graph"
+LUNCH_USAGE = SIMPLE_USAGE+"\n"+GRAPH_USAGE
+
 DATE_FORMATTER = '%d/%m/%Y'
 EXIT = "exit"
+GRAPH = "graph"
 
 file_name = "infant_monotoring.csv"
 
@@ -20,6 +28,16 @@ size = None
 weight = None
 
 data_list = []
+
+def lunch():
+	"""Verify number and coherence of parameters."""
+	if(len(sys.argv) == 2 and sys.argv[1] == GRAPH):
+		read_file()
+		create_graph()
+		sys.exit()
+	elif(len(sys.argv) != 1):
+		print(LUNCH_USAGE)
+		sys.exit()
 
 def exit_program():
 	"""Exit program."""
@@ -129,19 +147,24 @@ def create_graph():
 	x = [datetime.strptime(date, DATE_FORMATTER) for (date, size, weight) in data_list]
 	y = [weight for (date, size, weight) in data_list]
 	plt.plot(x,y,'g')
+
 	plt.xlabel('date')
 	plt.ylabel('weight (Kg)')
+	plt.xticks(rotation=70)
 	
 	#Second figure x = date,  y = size
 	plt.subplot(212)
 	x = [datetime.strptime(date, DATE_FORMATTER) for (date, size, weight) in data_list]
 	y = [size for (date, size, weight) in data_list]
-	plt.plot(x,y,'r')	
+	plt.plot(x,y,'r')
+	
 	plt.xlabel('date')
 	plt.ylabel('size (cm)')
+	plt.xticks(rotation=70)
 	
 	plt.show()
 
+lunch()
 while(True):
 	str_datas = input('Input date size weight (or "exit" to quit): ')
 	datas = check_values(str_datas)
