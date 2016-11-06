@@ -38,12 +38,16 @@ matplotlib.pyplot
 Description:
 Monitore the infant growth, showing the size and the weight per day in curves
 
-Usage:
+Usages:
+-Simple usage:
 infantMonitoring.py
 And put this data : date size weight
 date format : DD/MM/YYYY
 size format in cm: 50.00
 weight format in Kg: 3.000
+
+-Graph usage:
+infantMonitoring.py graph
 
 Example:
 infantMonitoring.py
@@ -51,3 +55,13 @@ Input date size weight (or "exit" to quit): 01/11/2016 50 4.980
 
 Import:
 matplotlib.pyplot
+
+###########################
+	loto.py
+###########################
+
+Description:
+Draw six different values from 1 to 46.
+
+Usage:
+loto.py
