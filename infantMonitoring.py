@@ -2,6 +2,7 @@ import sys
 import os
 from datetime import datetime
 import csv
+from matplotlib import pyplot as plt
 
 DATE_FORMAT = "date format : DD/MM/YYYY"
 SIZE_FORMAT = "size format in cm: 50.00"
@@ -9,12 +10,17 @@ WEIGHT_FORMAT = "weight format in Kg: 3.000"
 EXIT_USAGE = "Exit usage : only write exit"
 USAGE = "Usage : date size weight \n" +DATE_FORMAT+"\n"+SIZE_FORMAT+"\n"+WEIGHT_FORMAT+"\n"+EXIT_USAGE
 
+DATE_FORMATTER = '%d/%m/%Y'
 EXIT = "exit"
 
 date = None
 size = None
 weight = None
 
+date_list = []
+size_list = []
+weight_list = []
+	
 file_name = "infant_monotoring.csv"
 
 def exit_program():
@@ -40,7 +46,7 @@ def parse_values(datas):
 	global weight
 
 	try:
-		datetime.strptime(datas[0], '%d/%m/%Y')
+		datetime.strptime(datas[0], DATE_FORMATTER)
 		date = datas[0]
 	except ValueError:
 		print("Can't parse date : ", datas[0])
@@ -81,7 +87,7 @@ def create_file():
 		file.close()
 
 def write_file():
-	"""Write values entered with keyboard into csv file"""
+	"""Write values entered with keyboard into csv file."""
 	print("Write into file")
 	
 	#open file and write a new line whitout white line
@@ -95,6 +101,39 @@ def write_file():
 	finally:
 		#close file
 		file.close()
+
+def read_file():
+	"""Read csv file."""
+	print("Read file")
+
+	global date_list
+	global size_list
+	global weight_list
+	
+	with open(file_name, 'r') as file:
+		reader = csv.reader(file, delimiter=';')
+		#skip the header
+		next(reader, None)
+		for row in reader:
+			print(row)
+			date_list.append(datetime.strptime(row[0], DATE_FORMATTER))
+			size_list.append(float(row[1]))
+			weight_list.append(float(row[2]))
+
+def create_graph():
+	"""Create graph thanks to csv values."""
+	plt.title('Infant Monitoring Graph')
+	plt.subplot(211)
+	plt.plot(date_list,weight_list,'g')
+	plt.xlabel('date')
+	plt.ylabel('weight (Kg)')
+	
+	plt.subplot(212)
+	plt.plot(date_list,size_list,'r')	
+	plt.xlabel('date')
+	plt.ylabel('size (cm)')
+	
+	plt.show()
 
 while(True):
 	str_datas = input('Input date size weight (or "exit" to quit): ')
