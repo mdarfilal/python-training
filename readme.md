@@ -56,12 +56,22 @@ Input date size weight (or "exit" to quit): 01/11/2016 50 4.980
 Import:
 matplotlib.pyplot
 
-###########################
+###############
 	loto.py
-###########################
+###############
 
 Description:
 Draw six different values from 1 to 46.
 
 Usage:
 loto.py
+
+###################
+	fizzBuzz.py
+###################
+
+Description:
+Considering an array [1,100], print Fizz if number is multiple of three, Buzz if number is multiple of five, FizzBuzz if both of them, else do nothing.
+
+Usage:
+fizzBuzz.py
