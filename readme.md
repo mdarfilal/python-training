@@ -71,7 +71,15 @@ loto.py
 ###################
 
 Description:
-Considering an array [1,100], print Fizz if number is multiple of three, Buzz if number is multiple of five, FizzBuzz if both of them, else do nothing.
+Considering an array, print Fizz if number is multiple of three, Buzz if number is multiple of five, FizzBuzz if both of them, else do nothing.
 
 Usage:
+-Simple usage:
 fizzBuzz.py
+array by default [1,100]
+
+-Personnal usage:
+fizzBuzz.py Number_min Number_max
+
+Example:
+fizzBuzz.py 45 98
