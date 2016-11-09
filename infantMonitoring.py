@@ -2,6 +2,7 @@ import sys
 import os
 import csv
 from datetime import datetime
+import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 
 #Name of script without path
@@ -18,6 +19,7 @@ GRAPH_USAGE = "Graph usage : "+script_name+" graph"
 LUNCH_USAGE = SIMPLE_USAGE+"\n"+GRAPH_USAGE
 
 DATE_FORMATTER = '%d/%m/%Y'
+AXIS_FORMATTER = mdates.DateFormatter(DATE_FORMATTER)
 EXIT = "exit"
 GRAPH = "graph"
 
@@ -105,14 +107,14 @@ def create_file():
 def write_file():
 	"""Write values entered with keyboard into csv file."""
 	print("Write into file")
-	
+
 	#open file and write a new line whitout white line
 	file = open(file_name, "a", newline ='')
 
 	try:
 		#create writer
 		writer = csv.writer(file, delimiter=';')
-		
+
 		writer.writerow((date, size, weight))
 	finally:
 		#close file
@@ -125,7 +127,7 @@ def read_file():
 	global date_list
 	global size_list
 	global weight_list
-	
+
 	with open(file_name, 'r') as file:
 		reader = csv.reader(file, delimiter=';')
 		#skip the header
@@ -137,31 +139,36 @@ def read_file():
 def create_graph():
 	"""Create graph thanks to csv values."""
 	print("Create graph")
-	
+
 	#Title of figure
 	fig = plt.figure()
 	fig.suptitle('Infant Monitoring Graph', fontsize=14, fontweight='bold')
-	
+
 	#First figure x = date , y = weight
-	plt.subplot(211)
+	ax = plt.subplot(211)
 	x = [datetime.strptime(date, DATE_FORMATTER) for (date, size, weight) in data_list]
 	y = [weight for (date, size, weight) in data_list]
 	plt.plot(x,y,'g')
 
 	plt.xlabel('date')
 	plt.ylabel('weight (Kg)')
-	plt.xticks(rotation=70)
-	
+
+	#Format axis date
+	ax.xaxis.set_major_formatter(AXIS_FORMATTER)
+
 	#Second figure x = date,  y = size
-	plt.subplot(212)
+	ax = plt.subplot(212)
 	x = [datetime.strptime(date, DATE_FORMATTER) for (date, size, weight) in data_list]
 	y = [size for (date, size, weight) in data_list]
 	plt.plot(x,y,'r')
-	
+
+	#Axis label
 	plt.xlabel('date')
 	plt.ylabel('size (cm)')
-	plt.xticks(rotation=70)
-	
+
+	#Format axis date
+	ax.xaxis.set_major_formatter(AXIS_FORMATTER)
+
 	plt.show()
 
 lunch()
